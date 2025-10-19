@@ -10,54 +10,65 @@ Script Purpose:
 ==========================================================
 */USE bronze;
     
-    SET @start_time = NOW();
-	LOAD DATA LOCAL INFILE '/Users/bhaveshsonje/Downloads/sql-data-warehouse-project/datasets/source_crm/cust_info.csv'
-	INTO TABLE crm_cust_info
-	FIELDS TERMINATED BY ','
-	IGNORE 1 ROWS;
-    SET @end_time = NOW();
-    SELECT CONCAT('LOAD DURATION: ', TIMESTAMPDIFF(SECOND, @start_time, @end_time),' seconds') AS message;
-    
-    SET @start_time = NOW();
-	LOAD DATA LOCAL INFILE '/Users/bhaveshsonje/Downloads/sql-data-warehouse-project/datasets/source_crm/prd_info.csv'
-	INTO TABLE crm_prd_info
-	FIELDS TERMINATED BY ','
-	IGNORE 1 ROWS;
-    SET @end_time = NOW();
-    SELECT CONCAT('LOAD DURATION: ', TIMESTAMPDIFF(SECOND, @start_time, @end_time),' seconds') AS message;
- 
-    SET @start_time = NOW();
-	LOAD DATA LOCAL INFILE '/Users/bhaveshsonje/Downloads/sql-data-warehouse-project/datasets/source_crm/sales_details.csv'
-	INTO TABLE crm_sales_details
-	FIELDS TERMINATED BY ','
-	IGNORE 1 ROWS;
-    SET @end_time = NOW();
-    SELECT CONCAT('LOAD DURATION: ', TIMESTAMPDIFF(SECOND, @start_time, @end_time),' seconds') AS message;
-    
-    SET @start_time = NOW();
-	LOAD DATA LOCAL INFILE '/Users/bhaveshsonje/Downloads/sql-data-warehouse-project/datasets/source_erp/CUST_AZ12.csv'
-	INTO TABLE erp_cust_az12
-	FIELDS TERMINATED BY ','
-	IGNORE 1 ROWS;
-    SET @end_time = NOW();
-    SELECT CONCAT('LOAD DURATION: ', TIMESTAMPDIFF(SECOND, @start_time, @end_time),' seconds') AS message;
-    
-    SET @start_time = NOW();
-	LOAD DATA LOCAL INFILE '/Users/bhaveshsonje/Downloads/sql-data-warehouse-project/datasets/source_erp/LOC_A101.csv'
-	INTO TABLE erp_loc_a101
-	FIELDS TERMINATED BY ','
-	IGNORE 1 ROWS;
-    SET @end_time = NOW();
-    SELECT CONCAT('LOAD DURATION: ', TIMESTAMPDIFF(SECOND, @start_time, @end_time),' seconds') AS message;
-    
-    
-    SET @start_time = NOW();
-	LOAD DATA LOCAL INFILE '/Users/bhaveshsonje/Downloads/sql-data-warehouse-project/datasets/source_erp/PX_CAT_G1V2.csv'
-	INTO TABLE erp_px_cat_g1v2
-	FIELDS TERMINATED BY ','
-	IGNORE 1 ROWS;
-    SET @end_time = NOW();
-    SELECT CONCAT('LOAD DURATION: ', TIMESTAMPDIFF(SECOND, @start_time, @end_time),' seconds') AS message;
+USE datawarehouse;
+USE bronze;
+
+DROP TABLE IF EXISTS bronze.crm_cust_info;
+CREATE TABLE bronze.crm_cust_info(
+	cst_id INT,
+	cst_key VARCHAR(50),
+	cst_firstname VARCHAR(50),
+	cst_lastname VARCHAR(50),
+	cst_marital_status VARCHAR(50),
+	cst_gender VARCHAR(50),
+	cst_create_date DATE
+);
+
+DROP TABLE IF EXISTS bronze.crm_prd_info;
+CREATE TABLE bronze.crm_prd_info (
+    prd_id INT,
+    prd_key VARCHAR(50),
+    prd_nm VARCHAR(50),
+    prd_cost INT,
+    prd_line VARCHAR(50),
+    prd_start_dt DATETIME,
+    prd_end_dt DATETIME
+);
+
+DROP TABLE IF EXISTS bronze.crm_sales_details;
+CREATE TABLE bronze.crm_sales_details (
+    sls_ord_num VARCHAR(50),
+    sls_prd_key VARCHAR(50),
+    sls_cust_id INT,
+    sls_order_dt INT,
+    sls_ship_dt INT,
+    sls_due_dt INT,
+    sls_sales INT,
+    sls_quantity INT,
+    sls_price INT
+);
+
+DROP TABLE IF EXISTS bronze.erp_loc_a101;
+CREATE TABLE bronze.erp_loc_a101 (
+    cid VARCHAR(50),
+    cntry VARCHAR(50)
+);
+
+DROP TABLE IF EXISTS bronze.erp_cust_az12;
+CREATE TABLE bronze.erp_cust_az12 (
+    cid VARCHAR(50),
+    bdate DATE,
+    gender VARCHAR(50)
+);
+
+DROP TABLE IF EXISTS bronze.erp_px_cat_g1v2;
+CREATE TABLE bronze.erp_px_cat_g1v2 (
+    id VARCHAR(50),
+    cat VARCHAR(50),
+    subcat VARCHAR(50),
+    maintenance VARCHAR(50)
+);
+
     
   
 
