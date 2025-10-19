@@ -1,4 +1,19 @@
-USE bronze;
+/*
+============================================================
+DML Script: Load Data into Bronze Tables
+============================================================
+
+Script Purpose:
+  This script loads data into the 'bronze' schema tables
+  from external CSV source files using the LOAD DATA command.
+  It populates all Bronze layer tables with fresh data for ETL.
+
+  Run this script to refresh or re-load data into the Bronze tables
+  after any updates in the source files.
+
+============================================================
+
+*/USE bronze;
 
 SET @start_time = NOW();
 TRUNCATE TABLE crm_cust_info;
